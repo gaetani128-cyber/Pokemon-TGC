@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mesa Pokémon TCG · reglas Base Set 2</title>
+<style>
+:root{--bg:#e6ebf4;--surface:#fff;--surface2:#f1f4fa;--ink:#16203a;--muted:#56627d;--line:#cbd3e3;--frame:#e3b21c;--accent:#2549a8;--accent-ink:#fff;--danger:#c42e27;--warn:#a86a00;--ok:#2b7d45;--sleep:#3457c0;--conf:#c2410c;--para:#946000;--poison:#7e22ce;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1430;--surface:#162046;--surface2:#1c2855;--ink:#eef1fa;--muted:#9eaacb;--line:#2d3b70;--frame:#d6a51a;--accent:#86a2f5;--accent-ink:#0d1430;--danger:#ff6f63;--warn:#f0b03c;--ok:#62d08a;--sleep:#93acff;--conf:#ff9d61;--para:#ffd45c;--poison:#cc9bff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1430;--surface:#162046;--surface2:#1c2855;--ink:#eef1fa;--muted:#9eaacb;--line:#2d3b70;--frame:#d6a51a;--accent:#86a2f5;--accent-ink:#0d1430;--danger:#ff6f63;--warn:#f0b03c;--ok:#62d08a;--sleep:#93acff;--conf:#ff9d61;--para:#ffd45c;--poison:#cc9bff;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 "Barlow",system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3,.btn,.turn,.ph{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif}
+h2{margin:0;font-size:1.3rem}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:4px solid var(--frame)}
+.top-in{max-width:980px;margin:0 auto;padding:8px 12px;display:flex;align-items:center;gap:10px}
+.tinfo{flex:1;min-width:0}
+.turn{font-size:1.25rem;font-weight:700;line-height:1.1}
+.ph{color:var(--muted);font-weight:600}
+.adv{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:12px 22px;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.3rem}
+.wrap{max-width:980px;margin:0 auto;padding:12px;display:grid;gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.rem{border-left:5px solid var(--accent)}
+.rem ul{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+.rem li.w{color:var(--warn);font-weight:600}.rem li.x{color:var(--danger);font-weight:600}.rem li.k{color:var(--ok);font-weight:600}
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.btn{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-weight:600;font-size:1.05rem}
+.btn.dan{border-color:var(--danger);color:var(--danger)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.btn.sel{border:2px solid var(--accent);color:var(--accent)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.coinr{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;font-weight:600}
+.coin{min-width:64px;text-align:center;padding:4px 10px;border-radius:999px;border:2px solid var(--frame)}
+.coin.c{background:var(--frame);color:#1a1a1a}
+.boards{display:grid;gap:12px}
+@media (min-width:760px){.boards{grid-template-columns:1fr 1fr}}
+.board{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.board.on{border:2px solid var(--accent)}
+.bh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pill{font-size:.8rem;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:1px 9px;font-weight:600}
+.act{border:6px solid var(--frame);border-radius:12px;padding:10px 12px;background:var(--surface2)}
+.lbl{font-family:"Barlow Condensed",sans-serif;font-weight:600;color:var(--muted)}
+.dm{font-family:"Barlow Condensed",sans-serif;font-size:2.2rem;font-weight:700;line-height:1}
+.dm small{font-size:1rem;color:var(--muted);font-weight:500}
+.bdgs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.bdg{padding:1px 9px;border-radius:999px;font-size:.85rem;font-weight:700;border:1.5px solid currentColor}
+.bdg.sleep{color:var(--sleep)}.bdg.conf{color:var(--conf)}.bdg.para{color:var(--para)}.bdg.poison{color:var(--poison)}.bdg.none{color:var(--muted);font-weight:500}
+.bench{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}
+.bs{border:3px solid var(--frame);border-radius:8px;padding:5px 4px;text-align:center;background:var(--surface2)}
+.bs .dm{font-size:1.4rem}
+.bs.z{border-color:var(--line)}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
+summary{cursor:pointer;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.05rem}
+.log{list-style:none;padding:0;margin:6px 0;font-size:.88rem;max-height:260px;overflow:auto}
+.log li{padding:3px 0;border-bottom:1px solid var(--line)}
+.sheet{position:fixed;inset:0;z-index:50;background:rgba(8,12,30,.55);display:flex;align-items:flex-end;justify-content:center}
+.sheet[hidden]{display:none}
+@media (min-width:700px){.sheet{align-items:center}}
+.pan{background:var(--surface);width:100%;max-width:520px;max-height:92%;overflow:auto;border-radius:14px 14px 0 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom,0px));border-top:6px solid var(--frame)}
+@media (min-width:700px){.pan{border-radius:14px}}
+.shead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.grp{margin-top:10px}
+.grp h3{margin:0 0 6px;font-size:1rem;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ghost{background:none;border:1px solid var(--line);border-radius:8px;padding:6px 12px}
+.muted{color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="sheet" class="sheet" data-a="close" hidden></div>
+<script>
+const KEY='ptcg-bs2-simple-v1';
+const PH={prep:'Preparación',draw:'1. Robar carta',main:'2. Acciones',atk:'3. Ataque',end:'4. Fin de turno'};
+const NEXT={draw:'main',main:'atk',atk:'end'};
+const STN={sleep:'Dormido',conf:'Confundido',para:'Paralizado',poison:'Envenenado'};
+const $=s=>document.querySelector(s);
+let S,U=[],ui={pick:null,coins:[]};
+const pl=()=>({ad:0,bd:[0,0,0,0,0],st:{},paraT:null,turns:0});
+const fresh=()=>({phase:'prep',turn:0,cur:0,first:0,p:[pl(),pl()],msgs:[],log:[]});
+function load(){try{const o=JSON.parse(localStorage.getItem(KEY));if(o&&o.S){S=o.S;U=o.U||[]}}catch(e){}if(!S)S=fresh()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({S,U}))}catch(e){}}
+function coin(){const a=new Uint32Array(1);crypto.getRandomValues(a);return(a[0]&1)?'Cara':'Ceca'}
+const J=i=>`Jugador ${i+1}`;
+const tName=t=>`${J(+t[0])} · ${t[1]==='a'?'Activo':'Banca '+(+t[2]+1)}`;
+const getD=t=>t[1]==='a'?S.p[+t[0]].ad:S.p[+t[0]].bd[+t[2]];
+function setD(t,v){v=Math.max(0,v);if(t[1]==='a')S.p[+t[0]].ad=v;else S.p[+t[0]].bd[+t[2]]=v}
+function log(m){S.log.unshift(`T${S.turn}: ${m}`);if(S.log.length>60)S.log.length=60}
+function act(fn){U.push(JSON.stringify(S));if(U.length>40)U.shift();fn();save();ui.pick=null;render()}
+
+function advance(){act(()=>{const c=S.cur;
+  if(S.phase==='prep'){S.turn=1;S.cur=S.first;S.p[S.cur].turns=1;S.phase='draw';log(`Empieza ${J(S.cur)}.`);return}
+  if(S.phase==='atk'){S.phase='end';S.msgs=[];
+    for(const i of [c,1-c]){const p=S.p[i];
+      if(p.st.poison){p.ad+=10;S.msgs.push(['w',`${J(i)}: activo Envenenado, se sumaron 10 de daño (total ${p.ad}).`])}
+      if(p.st.para){if(i===c&&S.turn>p.paraT){delete p.st.para;p.paraT=null;S.msgs.push(['k',`${J(i)}: el activo se recuperó de la Parálisis.`])}
+        else S.msgs.push(['w',`${J(i)}: el activo sigue Paralizado durante su próximo turno.`])}
+      if(p.st.sleep)S.msgs.push(['w',`${J(i)}: activo Dormido. Tirá 1 moneda: cara = Curar estado (Dormido).`])}
+    S.msgs.forEach(m=>log(m[1]));return}
+  if(S.phase==='end'){S.turn++;S.cur=1-c;S.p[S.cur].turns++;S.phase='draw';S.msgs=[];log(`Turno de ${J(S.cur)}.`);return}
+  S.phase=NEXT[S.phase]})}
+
+function reminders(){const c=S.cur,A=S.p[c].st,o=[];const L=(cl,t)=>o.push([cl,t]);
+  if(S.phase==='prep'){L('','Cada jugador baraja 60 cartas y roba 7.');L('','Sin Pokémon Básico: mostrar, barajar y robar 7 de nuevo. El rival puede robar hasta 2 cartas extra.');
+    L('','Cada uno pone 1 Básico activo y hasta 5 en la banca, boca abajo.');L('','Cada uno aparta 6 cartas como premios.');L('','Tirá 1 moneda para decidir quién empieza y elegilo abajo.');L('','Se dan vuelta todos los Pokémon y se pulsa Avanzar.')}
+  else if(S.phase==='draw'){L('x',`${J(c)}: robá 1 carta antes de hacer cualquier otra cosa.`);L('','Si no podés robar porque el mazo está vacío, perdés.')}
+  else if(S.phase==='main'){L('','Bajar Pokémon Básicos a la banca (máximo 5).');
+    L(S.p[c].turns<=1?'x':'',S.p[c].turns<=1?'Primer turno de este jugador: no puede evolucionar.':'Evolucionar: no sobre un Pokémon bajado o evolucionado este turno. Si evolucionás el activo, usá Curar estado.');
+    L('','Unir 1 sola energía por turno.');L('','Jugar Entrenadores y usar Poderes Pokémon.');
+    L(A.sleep||A.para?'x':A.conf?'w':'',A.sleep||A.para?'El activo no puede retirarse (Dormido o Paralizado).':A.conf?'Retirar estando Confundido: pagá el coste y tirá 1 moneda; ceca = falla.':'Retirar: descartá 1 energía por cada ★ y usá Cambiar activo.')}
+  else if(S.phase==='atk'){
+    if(A.sleep||A.para)L('x',`El activo de ${J(c)} está ${A.sleep?'Dormido':'Paralizado'}: no puede atacar. Pulsá Avanzar.`);
+    else{if(A.conf)L('w','Activo Confundido: tirá 1 moneda antes de atacar. Ceca = no ataca y sumá 20 de daño a tu propio activo.');
+      L('','Debilidad: daño ×2. Resistencia: daño −30.');L('','Usá Sumar daño sobre el Pokémon rival y Poner estado si el ataque lo indica.');
+      L('','Si el daño llega a los PS: Debilitado y el atacante toma 1 premio.');L('','Atacar termina el turno: pulsá Avanzar.')}}
+  else if(S.phase==='end'){S.msgs.forEach(m=>L(m[0],m[1]));if(!S.msgs.length)L('k','Sin veneno, sueño ni parálisis.');L('','Si un activo quedó Debilitado, su dueño sube uno de la banca con Cambiar activo.')}
+  return o}
+
+const bdg=st=>{const k=Object.keys(STN).filter(x=>st[x]);return`<div class="bdgs">${k.length?k.map(x=>`<span class="bdg ${x}">${STN[x]}</span>`).join(''):'<span class="bdg none">Sin estados</span>'}</div>`};
+function board(i){const p=S.p[i],on=S.phase!=='prep'&&S.cur===i;
+  return`<section class="board ${on?'on':''}"><div class="bh"><h2>${J(i)}</h2>${on?'<span class="pill">Su turno</span>':''}</div>
+  <div class="act"><div class="lbl">Activo</div><div class="dm">${p.ad}<small> de daño</small></div>${bdg(p.st)}</div>
+  <div class="bench">${p.bd.map((d,b)=>`<div class="bs ${d?'':'z'}"><div class="lbl">B${b+1}</div><div class="dm">${d}</div></div>`).join('')}</div></section>`}
+
+function render(){const r=reminders();
+  $('#app').innerHTML=`<header class="top"><div class="top-in"><div class="tinfo"><div class="turn">${S.phase==='prep'?'Preparación':`Turno ${S.turn} · ${J(S.cur)}`}</div><div class="ph">${PH[S.phase]}</div></div>
+  <button class="adv" data-a="adv">Avanzar</button></div></header>
+  <main class="wrap"><div class="panel rem"><h2>${PH[S.phase]}</h2><ul>${r.map(x=>`<li class="${x[0]}">${x[1]}</li>`).join('')}</ul>
+  ${S.phase==='prep'?`<div class="tools" style="margin-top:10px">${[0,1].map(i=>`<button class="btn ${S.first===i?'sel':''}" aria-pressed="${S.first===i}" data-a="first" data-x="${i}">Empieza ${J(i)}</button>`).join('')}</div>`:''}</div>
+  <div class="panel"><div class="tools">
+  <button class="btn" data-a="pick" data-x="dmg">Sumar daño</button><button class="btn" data-a="pick" data-x="heal">Curar</button>
+  <button class="btn" data-a="pick" data-x="setst">Poner estado</button><button class="btn" data-a="pick" data-x="curest">Curar estado</button>
+  <button class="btn dan" data-a="pick" data-x="ko">Debilitado</button><button class="btn" data-a="pick" data-x="swap">Cambiar activo</button>
+  <button class="btn" data-a="coin" data-x="1">Tirar 1 moneda</button><button class="btn" data-a="coin" data-x="2">Tirar 2 monedas</button></div>
+  ${ui.coins.length?`<div class="coinr">${ui.coins.map(c=>`<span class="coin ${c==='Cara'?'c':''}">${c}</span>`).join('')}</div>`:''}</div>
+  <div class="boards">${board(0)}${board(1)}</div>
+  <details ${ui.det?'open':''}><summary>Registro y opciones</summary><div class="tools" style="margin:8px 0"><button class="btn" data-a="undo" ${U.length?'':'disabled'}>Deshacer</button><button class="btn dan" data-a="newg">${ui.confirm?'Confirmar: borrar partida':'Nueva partida'}</button></div>
+  <ul class="log">${S.log.map(l=>`<li>${l}</li>`).join('')||'<li class="muted">Sin movimientos.</li>'}</ul></details></main>`;
+  sheet()}
+
+const TITLE={dmg:'Sumar daño',heal:'Curar',setst:'Poner estado',curest:'Curar estado',ko:'Debilitado',swap:'Cambiar activo'};
+function targets(onlyActive){return[0,1].map(i=>`<div class="grp"><h3>${J(i)}</h3><div class="grid">${(onlyActive?['a']:['a','b0','b1','b2','b3','b4']).map(s=>{const t=i+s;return`<button class="btn" data-a="tg" data-x="${t}">${s==='a'?'Activo':'Banca '+(+s[1]+1)} · ${getD(t)}</button>`}).join('')}</div></div>`).join('')}
+function sheet(){const el=$('#sheet'),k=ui.pick;if(!k){el.hidden=true;el.innerHTML='';return}el.hidden=false;let h='';
+  if(!k.t){h=k.kind==='swap'?`<p>¿Qué jugador cambia su activo?</p><div class="grid">${[0,1].map(i=>`<button class="btn" data-a="tg" data-x="${i}a">${J(i)}</button>`).join('')}</div>`
+    :`<p>Elegí el Pokémon.</p>${targets(k.kind==='setst'||k.kind==='curest')}`}
+  else{const t=k.t,i=+t[0],st=S.p[i].st;h=`<p><b>${k.kind==='swap'?J(i):tName(t)}</b>${k.kind==='swap'?'':` · daño actual ${getD(t)}`}</p>`;
+    if(k.kind==='dmg')h+=`<div class="grid">${[10,20,30,40,50,60,70,80,100].map(n=>`<button class="btn" data-a="do" data-x="${n}">+${n}</button>`).join('')}</div>`;
+    if(k.kind==='heal')h+=`<div class="grid">${[10,20,30,40,50,60].map(n=>`<button class="btn" data-a="do" data-x="${n}">−${n}</button>`).join('')}<button class="btn" data-a="do" data-x="all">Todo</button></div>`;
+    if(k.kind==='setst')h+=`<div class="grid">${Object.keys(STN).map(s=>`<button class="btn ${st[s]?'sel':''}" data-a="do" data-x="${s}">${STN[s]}</button>`).join('')}</div><p class="muted">Dormido, Confundido y Paralizado se reemplazan entre sí. Envenenado se suma a cualquiera.</p>`;
+    if(k.kind==='curest'){const ks=Object.keys(STN).filter(s=>st[s]);h+=ks.length?`<div class="grid">${ks.map(s=>`<button class="btn" data-a="do" data-x="${s}">${STN[s]}</button>`).join('')}<button class="btn" data-a="do" data-x="all">Todos</button></div>`:'<p class="muted">Este activo no tiene estados.</p>'}
+    if(k.kind==='ko')h+=`<p>El daño vuelve a 0${t[1]==='a'?' y se borran los estados':''}. El rival toma 1 premio.${t[1]==='a'?' Después subí un Pokémon de la banca con Cambiar activo.':''}</p><button class="btn dan" data-a="do" data-x="ok">Confirmar Debilitado</button>`;
+    if(k.kind==='swap')h+=`<p>¿Qué Pokémon de la banca pasa a activo? El activo actual va a ese lugar y pierde sus estados.</p><div class="grid">${S.p[i].bd.map((d,b)=>`<button class="btn" data-a="do" data-x="${b}">Banca ${b+1} · ${d}</button>`).join('')}</div>`}
+  el.innerHTML=`<div class="pan" data-a="noop" role="dialog" aria-modal="true" aria-label="${TITLE[k.kind]}"><div class="shead"><h2>${TITLE[k.kind]}</h2><button class="ghost" data-a="close">Cerrar</button></div>${h}</div>`}
+
+function doIt(x){const k=ui.pick,t=k.t,i=+t[0],p=S.p[i];act(()=>{
+  if(k.kind==='dmg'){setD(t,getD(t)+ +x);log(`${tName(t)}: +${x} de daño (total ${getD(t)}).`)}
+  if(k.kind==='heal'){setD(t,x==='all'?0:getD(t)-+x);log(`${tName(t)}: curado ${x==='all'?'todo':x} (total ${getD(t)}).`)}
+  if(k.kind==='setst'){if(x!=='poison'){delete p.st.sleep;delete p.st.conf;delete p.st.para;p.paraT=null}p.st[x]=true;if(x==='para')p.paraT=S.turn;log(`${tName(t)}: ${STN[x]}.`)}
+  if(k.kind==='curest'){if(x==='all')p.st={};else delete p.st[x];if(!p.st.para)p.paraT=null;log(`${tName(t)}: curado ${x==='all'?'de todos los estados':'de '+STN[x]}.`)}
+  if(k.kind==='ko'){setD(t,0);if(t[1]==='a'){p.st={};p.paraT=null}log(`${tName(t)}: Debilitado. ${J(1-i)} toma 1 premio.`)}
+  if(k.kind==='swap'){const b=+x,old=p.ad;p.ad=p.bd[b];p.bd[b]=old;p.st={};p.paraT=null;log(`${J(i)}: Banca ${b+1} pasa a activo; el anterior activo queda en Banca ${b+1}.`)}})}
+
+const H={adv:advance,noop(){},close(){ui.pick=null;sheet()},
+  first(x){act(()=>{S.first=+x})},
+  coin(x){ui.coins=Array.from({length:+x},coin);log(`Moneda${+x>1?'s':''}: ${ui.coins.join(', ')}.`);save();render()},
+  pick(x){ui.pick={kind:x,t:null};sheet()},tg(x){ui.pick.t=x;sheet()},do:doIt,
+  undo(){if(U.length){S=JSON.parse(U.pop());save();render()}},
+  newg(){if(!ui.confirm){ui.confirm=true;ui.det=true;render();return}ui.confirm=false;S=fresh();U=[];ui.coins=[];save();render()}};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;(H[b.dataset.a]||H.noop)(b.dataset.x)});
+document.addEventListener('toggle',e=>{if(e.target.tagName==='DETAILS')ui.det=e.target.open},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ui.pick){ui.pick=null;sheet()}});
+load();render();
+</script>
+</body>
+</html>
