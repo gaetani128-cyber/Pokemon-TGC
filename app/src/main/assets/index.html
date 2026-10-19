@@ -5,84 +5,207 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mesa Pokémon TCG · reglas Base Set 2</title>
 <style>
-:root{--bg:#e6ebf4;--surface:#fff;--surface2:#f1f4fa;--ink:#16203a;--muted:#56627d;--line:#cbd3e3;--frame:#e3b21c;--accent:#2549a8;--accent-ink:#fff;--danger:#c42e27;--warn:#a86a00;--ok:#2b7d45;--sleep:#3457c0;--conf:#c2410c;--para:#946000;--poison:#7e22ce;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1430;--surface:#162046;--surface2:#1c2855;--ink:#eef1fa;--muted:#9eaacb;--line:#2d3b70;--frame:#d6a51a;--accent:#86a2f5;--accent-ink:#0d1430;--danger:#ff6f63;--warn:#f0b03c;--ok:#62d08a;--sleep:#93acff;--conf:#ff9d61;--para:#ffd45c;--poison:#cc9bff;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d1430;--surface:#162046;--surface2:#1c2855;--ink:#eef1fa;--muted:#9eaacb;--line:#2d3b70;--frame:#d6a51a;--accent:#86a2f5;--accent-ink:#0d1430;--danger:#ff6f63;--warn:#f0b03c;--ok:#62d08a;--sleep:#93acff;--conf:#ff9d61;--para:#ffd45c;--poison:#cc9bff;color-scheme:dark}
+:root{--bg:#d6deec;--mat:#c3d0e6;--matline:rgba(37,73,168,.38);--surface:#ffffff;--surface2:#eef2f9;--ink:#141c33;--muted:#4f5d7b;--line:#c2cbdf;--frame:#e6b51d;--framed:#b88a0c;--cardin:#fff8de;--accent:#2549a8;--accent-ink:#ffffff;--danger:#c42e27;--warn:#9c6300;--ok:#24753f;--sleep:#3457c0;--conf:#c2410c;--para:#8f5d00;--poison:#7e22ce;--shadow:rgba(20,28,51,.22);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#070c20;--mat:#0f1a3e;--matline:rgba(134,162,245,.3);--surface:#141e45;--surface2:#1b2654;--ink:#eef1fa;--muted:#9eaacb;--line:#2c3a70;--frame:#dcab1c;--framed:#9d7509;--cardin:#1d2850;--accent:#86a2f5;--accent-ink:#0b1129;--danger:#ff6f63;--warn:#f0b03c;--ok:#62d08a;--sleep:#93acff;--conf:#ff9d61;--para:#ffd45c;--poison:#cc9bff;--shadow:rgba(0,0,0,.5);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#070c20;--mat:#0f1a3e;--matline:rgba(134,162,245,.3);--surface:#141e45;--surface2:#1b2654;--ink:#eef1fa;--muted:#9eaacb;--line:#2c3a70;--frame:#dcab1c;--framed:#9d7509;--cardin:#1d2850;--accent:#86a2f5;--accent-ink:#0b1129;--danger:#ff6f63;--warn:#f0b03c;--ok:#62d08a;--sleep:#93acff;--conf:#ff9d61;--para:#ffd45c;--poison:#cc9bff;--shadow:rgba(0,0,0,.5);color-scheme:dark}
+:root{--noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 *,*::before,*::after{box-sizing:border-box}
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 "Barlow",system-ui,-apple-system,"Segoe UI",sans-serif}
-h1,h2,h3,.btn,.turn,.ph{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif}
+body{margin:0;color:var(--ink);font:16px/1.45 "Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--noise),radial-gradient(ellipse 90% 60% at 50% 0%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 70%),var(--bg);background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--surface)}
+h1,h2,h3,.btn,.turn,.cond{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif}
+.disp{font-family:"Bungee","Barlow Condensed",system-ui,sans-serif;font-weight:400;letter-spacing:.02em}
 h2{margin:0;font-size:1.3rem}
 button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:4px solid var(--frame)}
-.top-in{max-width:980px;margin:0 auto;padding:8px 12px;display:flex;align-items:center;gap:10px}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.muted{color:var(--muted)}
+/* barra superior */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:4px solid var(--frame);box-shadow:0 4px 14px var(--shadow)}
+.top-in{max-width:1000px;margin:0 auto;padding:8px 12px;display:flex;align-items:center;gap:12px}
 .tinfo{flex:1;min-width:0}
-.turn{font-size:1.25rem;font-weight:700;line-height:1.1}
-.ph{color:var(--muted);font-weight:600}
-.adv{background:var(--accent);color:var(--accent-ink);border:0;border-radius:10px;padding:12px 22px;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.3rem}
-.wrap{max-width:980px;margin:0 auto;padding:12px;display:grid;gap:12px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-.rem{border-left:5px solid var(--accent)}
+.turn{font-size:1.25rem;font-weight:700;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pips{display:flex;gap:4px;margin-top:5px}
+.pips span{flex:1;height:6px;border-radius:3px;background:var(--surface2);border:1px solid var(--line)}
+.pips span.d{background:color-mix(in srgb,var(--accent) 45%,var(--surface2))}
+.pips span.on{background:var(--accent);border-color:var(--accent)}
+.phn{font-size:.85rem;color:var(--muted);font-weight:600;margin-top:2px}
+.adv{position:relative;overflow:hidden;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 85%,#fff),var(--accent));color:var(--accent-ink);border:0;border-radius:12px;padding:12px 20px;font-size:1.15rem;box-shadow:0 3px 0 color-mix(in srgb,var(--accent) 60%,#000),0 6px 14px var(--shadow)}
+.adv:active{transform:translateY(2px);box-shadow:0 1px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.wrap{max-width:1000px;margin:0 auto;padding:12px;display:grid;gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px var(--shadow)}
+.rem{border-left:6px solid var(--accent)}
+.rem h2{display:flex;align-items:center;gap:8px}
 .rem ul{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
 .rem li.w{color:var(--warn);font-weight:600}.rem li.x{color:var(--danger);font-weight:600}.rem li.k{color:var(--ok);font-weight:600}
-.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
-.btn{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-weight:600;font-size:1.05rem}
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.btn{display:flex;align-items:center;justify-content:center;gap:7px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-weight:600;font-size:1.05rem;box-shadow:0 2px 0 var(--line)}
+.btn:active{transform:translateY(1px);box-shadow:none}
+.btn svg{width:22px;height:22px;flex:none}
 .btn.dan{border-color:var(--danger);color:var(--danger)}
-.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:transparent}
-.btn.sel{border:2px solid var(--accent);color:var(--accent)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:transparent;box-shadow:0 2px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.btn.gold{background:linear-gradient(180deg,#f7d564,#d9a516);color:#3a2900;border-color:#b88a0c;box-shadow:0 2px 0 #8d6a08}
+.btn.sel{outline:2px solid var(--accent);color:var(--accent)}
 .btn:disabled{opacity:.4;cursor:not-allowed}
-.coinr{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;font-weight:600}
-.coin{min-width:64px;text-align:center;padding:4px 10px;border-radius:999px;border:2px solid var(--frame)}
-.coin.c{background:var(--frame);color:#1a1a1a}
+.lastc{display:flex;gap:6px;align-items:center;margin-top:8px;font-weight:600;flex-wrap:wrap}
+.chip{padding:2px 12px;border-radius:999px;border:2px solid var(--frame);font-weight:700}
+.chip.c{background:var(--frame);color:#2b1f00}
+/* tapete */
 .boards{display:grid;gap:12px}
-@media (min-width:760px){.boards{grid-template-columns:1fr 1fr}}
-.board{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
-.board.on{border:2px solid var(--accent)}
+@media (min-width:780px){.boards{grid-template-columns:1fr 1fr}}
+.board{position:relative;border-radius:18px;padding:12px;background:var(--noise),linear-gradient(160deg,color-mix(in srgb,var(--mat) 92%,#fff),var(--mat));border:1px solid var(--line);box-shadow:inset 0 0 40px color-mix(in srgb,var(--accent) 14%,transparent),0 3px 12px var(--shadow)}
+.board.on{box-shadow:inset 0 0 40px color-mix(in srgb,var(--accent) 25%,transparent),0 0 0 3px var(--accent),0 3px 12px var(--shadow)}
 .bh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.pill{font-size:.8rem;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:1px 9px;font-weight:600}
-.act{border:6px solid var(--frame);border-radius:12px;padding:10px 12px;background:var(--surface2)}
-.lbl{font-family:"Barlow Condensed",sans-serif;font-weight:600;color:var(--muted)}
-.dm{font-family:"Barlow Condensed",sans-serif;font-size:2.2rem;font-weight:700;line-height:1}
-.dm small{font-size:1rem;color:var(--muted);font-weight:500}
-.bdgs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.bdg{padding:1px 9px;border-radius:999px;font-size:.85rem;font-weight:700;border:1.5px solid currentColor}
+.bh h2{font-size:1.4rem}
+.pill{font-size:.8rem;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:2px 10px;font-weight:700}
+.zlab{font-family:"Barlow Condensed",sans-serif;font-weight:700;letter-spacing:.18em;font-size:.72rem;color:var(--matline);text-transform:uppercase}
+.zone{border:2px dashed var(--matline);border-radius:14px;padding:10px;display:grid;justify-items:center;gap:6px}
+.card{position:relative;width:min(170px,62vw);aspect-ratio:63/88;border-radius:12px;padding:9px;background:linear-gradient(145deg,#f8d54a,var(--frame) 40%,var(--framed));box-shadow:0 6px 14px var(--shadow),inset 0 0 0 1px rgba(0,0,0,.18);overflow:hidden}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.38) 45%,rgba(160,220,255,.25) 50%,transparent 62%);background-size:250% 100%;background-position:120% 0;pointer-events:none;mix-blend-mode:soft-light}
+@media (prefers-reduced-motion:no-preference){.card::after{animation:holo 6s ease-in-out infinite}}
+@keyframes holo{50%{background-position:-20% 0}}
+.cin{height:100%;border-radius:7px;background:var(--noise),linear-gradient(180deg,var(--cardin),color-mix(in srgb,var(--cardin) 85%,var(--accent)));display:flex;flex-direction:column;align-items:center;padding:8px 6px;position:relative;box-shadow:inset 0 0 0 2px rgba(0,0,0,.12)}
+.ctop{width:100%;display:flex;justify-content:space-between;align-items:center;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.12em;color:var(--muted)}
+.dmg{font-family:"Bungee",sans-serif;font-size:3rem;line-height:1;margin-top:14px;color:var(--ink)}
+.dmg.hot{color:var(--danger)}
+.dl{font-size:.82rem;color:var(--muted);font-weight:600}
+.tks{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;margin-top:auto;padding-top:6px}
+.tk{display:grid;place-items:center;border-radius:50%;color:#fff;font-weight:800;font-family:"Barlow Condensed",sans-serif;box-shadow:inset 0 -2px 0 rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.35)}
+.tk.t10{width:20px;height:20px;font-size:.66rem;background:radial-gradient(circle at 35% 30%,#ff7b6d,#c42e27 70%)}
+.tk.t50{width:26px;height:26px;font-size:.78rem;background:radial-gradient(circle at 35% 30%,#ffc061,#e06a10 70%)}
+.aura{position:absolute;inset:0;pointer-events:none}
+.fx{position:absolute;width:30px;height:30px}
+.fx svg{width:100%;height:100%}
+@media (prefers-reduced-motion:no-preference){
+ .fx.sleep{animation:zz 2.6s ease-in-out infinite}
+ .fx.conf{animation:spin 3s linear infinite}
+ .fx.para{animation:zap 1.1s steps(2) infinite}
+ .fx.poison{animation:bub 2.2s ease-in-out infinite}}
+@keyframes zz{0%{transform:translate(0,6px);opacity:0}30%{opacity:1}100%{transform:translate(10px,-14px);opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes zap{50%{opacity:.25}}
+@keyframes bub{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.card.s-sleep{box-shadow:0 0 0 3px var(--sleep),0 6px 14px var(--shadow)}
+.card.s-conf{box-shadow:0 0 0 3px var(--conf),0 6px 14px var(--shadow)}
+.card.s-para{box-shadow:0 0 0 3px var(--para),0 6px 14px var(--shadow)}
+.card.s-poison .cin{background:var(--noise),linear-gradient(180deg,var(--cardin),color-mix(in srgb,var(--cardin) 70%,var(--poison)))}
+.bdgs{display:flex;flex-wrap:wrap;justify-content:center;gap:5px}
+.bdg{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:999px;font-size:.84rem;font-weight:700;border:1.5px solid currentColor;background:var(--surface)}
+.bdg svg{width:16px;height:16px}
 .bdg.sleep{color:var(--sleep)}.bdg.conf{color:var(--conf)}.bdg.para{color:var(--para)}.bdg.poison{color:var(--poison)}.bdg.none{color:var(--muted);font-weight:500}
-.bench{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}
-.bs{border:3px solid var(--frame);border-radius:8px;padding:5px 4px;text-align:center;background:var(--surface2)}
-.bs .dm{font-size:1.4rem}
-.bs.z{border-color:var(--line)}
-details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
+.ori{width:13px;height:18px;border:2px solid currentColor;border-radius:2px;display:inline-block}
+.ori.side{transform:rotate(90deg)}.ori.flip{transform:rotate(180deg);border-top-width:5px}
+.bench{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:4px;width:100%}
+.bcard{aspect-ratio:63/88;border-radius:8px;padding:4px;background:linear-gradient(145deg,#f8d54a,var(--frame) 45%,var(--framed));box-shadow:0 3px 7px var(--shadow)}
+.bcard .bi{height:100%;border-radius:5px;background:var(--noise),var(--cardin);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:4px 2px}
+.bcard .bn{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:.8rem;color:var(--muted)}
+.bcard .bd{font-family:"Bungee",sans-serif;font-size:1.25rem;line-height:1}
+.bcard .dots{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;min-height:8px}
+.bcard .dots i{width:7px;height:7px;border-radius:50%;background:#d23b2f}
+.bcard .dots i.f{width:9px;height:9px;background:#e8761a}
+.bcard.z{opacity:.72}
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 14px}
 summary{cursor:pointer;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.05rem}
 .log{list-style:none;padding:0;margin:6px 0;font-size:.88rem;max-height:260px;overflow:auto}
 .log li{padding:3px 0;border-bottom:1px solid var(--line)}
-.sheet{position:fixed;inset:0;z-index:50;background:rgba(8,12,30,.55);display:flex;align-items:flex-end;justify-content:center}
-.sheet[hidden]{display:none}
+/* hoja de selección */
+.sheet,.pop{position:fixed;inset:0;display:flex;justify-content:center;background:rgba(6,10,28,.6);backdrop-filter:blur(3px)}
+.sheet{z-index:50;align-items:flex-end}
+.sheet[hidden],.pop[hidden]{display:none}
 @media (min-width:700px){.sheet{align-items:center}}
-.pan{background:var(--surface);width:100%;max-width:520px;max-height:92%;overflow:auto;border-radius:14px 14px 0 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom,0px));border-top:6px solid var(--frame)}
-@media (min-width:700px){.pan{border-radius:14px}}
+.pan{background:var(--surface);width:100%;max-width:520px;max-height:92%;overflow:auto;border-radius:16px 16px 0 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom,0px));border-top:6px solid var(--frame)}
+@media (min-width:700px){.pan{border-radius:16px}}
 .shead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
 .grp{margin-top:10px}
 .grp h3{margin:0 0 6px;font-size:1rem;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .ghost{background:none;border:1px solid var(--line);border-radius:8px;padding:6px 12px}
-.muted{color:var(--muted)}
+/* pantallas emergentes */
+.pop{z-index:60;align-items:center;padding:16px}
+.pc{position:relative;width:100%;max-width:400px;background:var(--noise),var(--surface);border-radius:20px;padding:20px 18px 18px;text-align:center;border:6px solid var(--frame);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.pc.warn{border-color:var(--danger)}
+.pc.purple{border-color:var(--poison)}
+@media (prefers-reduced-motion:no-preference){.pc{animation:popin .38s cubic-bezier(.2,1.4,.4,1)}}
+@keyframes popin{from{transform:scale(.6);opacity:0}}
+.pt{font-family:"Bungee","Barlow Condensed",sans-serif;font-size:1.55rem;line-height:1.15;margin:10px 0 6px}
+.pc.warn .pt{color:var(--danger)}
+.ptx{margin:0 0 4px;font-size:1.02rem}
+.plist{text-align:left;margin:8px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.plist li{display:flex;gap:8px;align-items:flex-start;padding:7px 10px;border-radius:8px;background:var(--surface2);font-weight:600}
+.plist svg{width:22px;height:22px;flex:none}
+.pbtns{display:grid;gap:8px;margin-top:14px}
+.art{height:150px;display:grid;place-items:center}
+.art svg{width:130px;height:130px}
+/* mazo y carta */
+.deck{position:relative;width:96px;height:130px}
+.cb{position:absolute;inset:0;border-radius:9px;border:4px solid #f2f2f2;background:repeating-linear-gradient(45deg,#1f3f9a 0 8px,#2a52bf 8px 16px);box-shadow:0 2px 4px rgba(0,0,0,.35)}
+.cb::after{content:"";position:absolute;inset:26% 18%;border-radius:50%;background:radial-gradient(circle,#f6cf3f 0 30%,#d99a0c 31% 45%,transparent 46%);opacity:.9}
+.cb:nth-child(1){transform:translate(6px,6px)}.cb:nth-child(2){transform:translate(3px,3px)}
+@media (prefers-reduced-motion:no-preference){.cb.dr{animation:draw 2.2s cubic-bezier(.3,.7,.3,1) infinite}}
+.cb.dr{transform:translate(60px,-30px) rotate(14deg)}
+@keyframes draw{0%,15%{transform:translate(0,0) rotate(0)}55%,80%{transform:translate(64px,-34px) rotate(14deg)}100%{transform:translate(64px,-34px) rotate(14deg);opacity:0}}
+/* monedas */
+.coins3{display:flex;justify-content:center;gap:26px;margin:24px 0 6px;perspective:900px;min-height:170px;align-items:flex-end}
+.cw{position:relative;display:grid;justify-items:center}
+.c3{width:112px;height:112px;position:relative;transform-style:preserve-3d;transform:rotateY(var(--end))}
+.cs{width:90px;height:14px;border-radius:50%;background:rgba(0,0,0,.35);filter:blur(3px);margin-top:10px}
+@media (prefers-reduced-motion:no-preference){
+ .c3{animation:toss 1.5s cubic-bezier(.3,.55,.35,1) both}
+ .cs{animation:shad 1.5s cubic-bezier(.3,.55,.35,1) both}}
+@keyframes toss{0%{transform:translateY(0) rotateY(0)}48%{transform:translateY(-130px) rotateY(calc(var(--end)*.55)) scale(1.08)}85%{transform:translateY(4px) rotateY(calc(var(--end)*.97))}100%{transform:translateY(0) rotateY(var(--end))}}
+@keyframes shad{48%{transform:scale(.45);opacity:.4}}
+.fc{position:absolute;inset:0;border-radius:50%;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:grid;place-items:center;background:radial-gradient(circle at 32% 28%,#fff3b0,#f2c53d 30%,#c98f0d 70%,#8a5d00);box-shadow:inset 0 0 0 5px #b58208,inset 0 0 0 8px #f7d969,inset 0 -6px 12px rgba(0,0,0,.25)}
+.fc.bk{transform:rotateY(180deg);background:radial-gradient(circle at 32% 28%,#f4f6fb,#c9cfdc 35%,#8f97a8 75%,#5c6475);box-shadow:inset 0 0 0 5px #7b8496,inset 0 0 0 8px #e3e7ef,inset 0 -6px 12px rgba(0,0,0,.25)}
+.fc svg{width:62%;height:62%}
+.fl{position:absolute;bottom:17%;font-family:"Bungee",sans-serif;font-size:.72rem;letter-spacing:.06em}
+.fc .fl{color:#5a3d00}.fc.bk .fl{color:#2f3644}
+.pres{min-height:2.8em;font-weight:700;font-size:1.1rem}
+.pres .big{font-family:"Bungee",sans-serif;font-size:1.5rem;display:block}
+.pres.good .big{color:var(--ok)}.pres.bad .big{color:var(--danger)}
+@media (prefers-reduced-motion:no-preference){.pres:not(:empty){animation:popin .3s ease-out}}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <div id="sheet" class="sheet" data-a="close" hidden></div>
+<div id="pop" class="pop" hidden></div>
 <script>
 const KEY='ptcg-bs2-simple-v1';
-const PH={prep:'Preparación',draw:'1. Robar carta',main:'2. Acciones',atk:'3. Ataque',end:'4. Fin de turno'};
+const PH={prep:'Preparación',draw:'1 · Robar carta',main:'2 · Acciones',atk:'3 · Ataque',end:'4 · Fin de turno'};
+const ORD=['draw','main','atk','end'];
 const NEXT={draw:'main',main:'atk',atk:'end'};
 const STN={sleep:'Dormido',conf:'Confundido',para:'Paralizado',poison:'Envenenado'};
 const $=s=>document.querySelector(s);
-let S,U=[],ui={pick:null,coins:[]};
+const RM=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+let S,U=[],ui={pick:null,coins:[],pop:null};
+
+/* ---- ilustraciones propias (SVG) ---- */
+const IC={
+ sleep:`<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M4 9h9l-9 10h9"/><path d="M18 5h7l-7 8h7"/><path d="M20 21h6l-6 7h6"/></svg>`,
+ conf:`<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M16 16m0 0a2 2 0 1 1 2 2a5 5 0 1 1 -5-5a8 8 0 1 1 -8 8"/></svg>`,
+ para:`<svg viewBox="0 0 32 32"><path d="M18 2 6 18h8l-2 12 14-18h-8z" fill="currentColor"/></svg>`,
+ poison:`<svg viewBox="0 0 32 32"><path d="M16 3c5 7 9 11 9 16a9 9 0 0 1-18 0c0-5 4-9 9-16z" fill="currentColor"/><circle cx="12" cy="20" r="2.4" fill="#fff" opacity=".7"/><circle cx="18" cy="24" r="1.6" fill="#fff" opacity=".6"/></svg>`,
+ plus:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#d23b2f"/><text x="12" y="16" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" font-family="sans-serif">10</text></svg>`,
+ heal:`<svg viewBox="0 0 24 24"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z" fill="#2fa35a"/><path d="M12 9v6M9 12h6" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>`,
+ status:`<svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="5" fill="#7e22ce"/><path d="M16 3 11 12h4l-1 7 6-9h-4z" fill="#d99a0c"/></svg>`,
+ cure:`<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="5.5" fill="#86a2f5"/><path d="M12 7v11" stroke="#fff" stroke-width="2"/><path d="M6 12.5h3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>`,
+ ko:`<svg viewBox="0 0 24 24"><path d="M12 2l2.4 5.6L20 6l-2.6 5L22 14l-5.6.6L17 20l-5-3-5 3 .6-5.4L2 14l4.6-3L4 6l5.6 1.6z" fill="#e8761a"/><text x="12" y="14.5" text-anchor="middle" font-size="6.5" font-weight="900" fill="#fff" font-family="sans-serif">KO</text></svg>`,
+ swap:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>`,
+ coin:`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#e6b51d" stroke="#a67a08" stroke-width="2"/><path d="M12 6.5l1.6 3.4 3.7.4-2.8 2.5.8 3.7-3.3-1.9-3.3 1.9.8-3.7-2.8-2.5 3.7-.4z" fill="#fff6c8"/></svg>`,
+ coin2:`<svg viewBox="0 0 24 24"><circle cx="9" cy="10" r="7" fill="#c9cfdc" stroke="#7b8496" stroke-width="1.6"/><circle cx="15" cy="14" r="7" fill="#e6b51d" stroke="#a67a08" stroke-width="1.6"/></svg>`
+};
+const FACE_CARA=`<svg viewBox="0 0 64 64"><path d="M32 6l7.6 16.2 17.4 2-13 11.8 3.8 17.4L32 44.6 16.2 53.4 20 36 7 24.2l17.4-2z" fill="#fff6c8" stroke="#8a5d00" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
+const FACE_CECA=`<svg viewBox="0 0 64 64" fill="none" stroke="#2f3644" stroke-width="3"><circle cx="32" cy="30" r="20"/><circle cx="32" cy="30" r="12" stroke-dasharray="4 4"/><circle cx="32" cy="30" r="4" fill="#2f3644"/></svg>`;
+const ART_STOP=`<svg viewBox="0 0 120 120"><path d="M38 6h44l32 32v44l-32 32H38L6 82V38z" fill="#c42e27" stroke="#fff" stroke-width="5"/><path d="M60 30v38" stroke="#fff" stroke-width="12" stroke-linecap="round"/><circle cx="60" cy="88" r="7" fill="#fff"/></svg>`;
+const ART_KO=`<svg viewBox="0 0 120 120"><path d="M60 4l11 26 27-9-11 26 27 13-27 12 9 27-27-10-9 27-9-27-27 10 9-27L6 72l27-13-11-26 27 9z" fill="#e8761a" stroke="#fff" stroke-width="4" stroke-linejoin="round"/><text x="60" y="73" text-anchor="middle" font-family="Bungee,sans-serif" font-size="30" fill="#fff">KO</text></svg>`;
+const ART_END=`<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-width="6" opacity=".25"/><path d="M60 22v38l24 16" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/><circle cx="60" cy="60" r="7" fill="currentColor"/></svg>`;
+const ART_COIN=`<div class="c3" style="--end:0deg;animation:none;transform:rotateY(-25deg)"><div class="fc">${FACE_CARA}<span class="fl">CARA</span></div><div class="fc bk">${FACE_CECA}<span class="fl">CECA</span></div></div>`;
+const ART_DECK=`<div class="deck"><i class="cb"></i><i class="cb"></i><i class="cb"></i><i class="cb dr"></i></div>`;
+
+/* ---- estado ---- */
 const pl=()=>({ad:0,bd:[0,0,0,0,0],st:{},paraT:null,turns:0});
-const fresh=()=>({phase:'prep',turn:0,cur:0,first:0,p:[pl(),pl()],msgs:[],log:[]});
-function load(){try{const o=JSON.parse(localStorage.getItem(KEY));if(o&&o.S){S=o.S;U=o.U||[]}}catch(e){}if(!S)S=fresh()}
+const fresh=()=>({phase:'prep',turn:0,cur:0,first:0,p:[pl(),pl()],msgs:[],log:[],cf:null,sf:{}});
+function load(){try{const o=JSON.parse(localStorage.getItem(KEY));if(o&&o.S){S=o.S;U=o.U||[]}}catch(e){}if(!S)S=fresh();S.sf=S.sf||{};if(S.cf===undefined)S.cf=null}
 function save(){try{localStorage.setItem(KEY,JSON.stringify({S,U}))}catch(e){}}
 function coin(){const a=new Uint32Array(1);crypto.getRandomValues(a);return(a[0]&1)?'Cara':'Ceca'}
 const J=i=>`Jugador ${i+1}`;
@@ -92,21 +215,71 @@ function setD(t,v){v=Math.max(0,v);if(t[1]==='a')S.p[+t[0]].ad=v;else S.p[+t[0]]
 function log(m){S.log.unshift(`T${S.turn}: ${m}`);if(S.log.length>60)S.log.length=60}
 function act(fn){U.push(JSON.stringify(S));if(U.length>40)U.shift();fn();save();ui.pick=null;render()}
 
-function advance(){act(()=>{const c=S.cur;
-  if(S.phase==='prep'){S.turn=1;S.cur=S.first;S.p[S.cur].turns=1;S.phase='draw';log(`Empieza ${J(S.cur)}.`);return}
-  if(S.phase==='atk'){S.phase='end';S.msgs=[];
-    for(const i of [c,1-c]){const p=S.p[i];
-      if(p.st.poison){p.ad+=10;S.msgs.push(['w',`${J(i)}: activo Envenenado, se sumaron 10 de daño (total ${p.ad}).`])}
-      if(p.st.para){if(i===c&&S.turn>p.paraT){delete p.st.para;p.paraT=null;S.msgs.push(['k',`${J(i)}: el activo se recuperó de la Parálisis.`])}
-        else S.msgs.push(['w',`${J(i)}: el activo sigue Paralizado durante su próximo turno.`])}
-      if(p.st.sleep)S.msgs.push(['w',`${J(i)}: activo Dormido. Tirá 1 moneda: cara = Curar estado (Dormido).`])}
-    S.msgs.forEach(m=>log(m[1]));return}
-  if(S.phase==='end'){S.turn++;S.cur=1-c;S.p[S.cur].turns++;S.phase='draw';S.msgs=[];log(`Turno de ${J(S.cur)}.`);return}
-  S.phase=NEXT[S.phase]})}
+function advance(){const c=S.cur;hidePop();
+  act(()=>{
+    if(S.phase==='prep'){S.turn=1;S.cur=S.first;S.p[S.cur].turns=1;S.phase='draw';S.cf=null;S.sf={};log(`Empieza ${J(S.cur)}.`);return}
+    if(S.phase==='atk'){S.phase='end';S.msgs=[];S.sf={};
+      for(const i of [c,1-c]){const p=S.p[i];
+        if(p.st.poison){p.ad+=10;S.msgs.push(['poison',`${J(i)}: activo Envenenado, +10 de daño (total ${p.ad}).`])}
+        if(p.st.para){if(i===c&&S.turn>p.paraT){delete p.st.para;p.paraT=null;S.msgs.push(['para',`${J(i)}: el activo se recuperó de la Parálisis.`])}
+          else S.msgs.push(['para',`${J(i)}: el activo sigue Paralizado durante su próximo turno.`])}}
+      S.msgs.forEach(m=>log(m[1]));return}
+    if(S.phase==='end'){S.turn++;S.cur=1-c;S.p[S.cur].turns++;S.phase='draw';S.msgs=[];S.cf=null;S.sf={};log(`Turno de ${J(S.cur)}.`);return}
+    S.phase=NEXT[S.phase]});
+  phasePop()}
 
+/* ---- pantallas emergentes ---- */
+function showPop(o){o.btns=o.btns||[{l:'Entendido',pri:1}];ui.pop=o;const el=$('#pop');el.hidden=false;
+  el.innerHTML=`<div class="pc ${o.cls||''}" role="alertdialog" aria-modal="true" aria-labelledby="ptt">
+  <div class="art" ${o.artColor?`style="color:${o.artColor}"`:''}>${o.art||''}</div><div id="ptt" class="pt">${o.title}</div>
+  ${o.text?`<p class="ptx">${o.text}</p>`:''}${o.html||''}
+  <div class="pbtns">${o.btns.map((b,i)=>`<button class="btn ${b.pri?'pri':b.gold?'gold':''}" data-a="pb" data-x="${i}">${b.ic||''}${b.l}</button>`).join('')}</div></div>`;
+  const f=el.querySelector('[data-a=pb]');if(f)f.focus()}
+function hidePop(){ui.pop=null;const el=$('#pop');el.hidden=true;el.innerHTML=''}
+
+function phasePop(){const c=S.cur,st=S.p[c].st;
+  if(S.phase==='draw')popDraw();
+  else if(S.phase==='atk'){if(st.sleep||st.para)popNoAtk();else if(st.conf&&!S.cf)popConf()}
+  else if(S.phase==='end')popEnd()}
+function popDraw(){showPop({art:ART_DECK,title:'¡Levantá una carta!',text:`${J(S.cur)}: robá 1 carta de tu mazo antes de hacer cualquier otra cosa.`,
+  btns:[{l:'Ya levanté',pri:1,fn:()=>advance()},{l:'No me quedan cartas',fn:()=>showPop({cls:'warn',art:ART_STOP,title:'Mazo vacío',text:`${J(S.cur)} no puede robar al comienzo de su turno. Gana ${J(1-S.cur)}.`})}]})}
+function popNoAtk(){const st=S.p[S.cur].st;showPop({cls:'warn',art:ART_STOP,title:'¡No podés atacar ahora!',
+  text:`El activo de ${J(S.cur)} está <b>${st.sleep?'Dormido':'Paralizado'}</b>: no puede atacar ni retirarse.`,
+  btns:[{l:'Terminar turno',pri:1,fn:()=>advance()},{l:'Entendido'}]})}
+function popConf(){const c=S.cur;showPop({art:ART_COIN,title:'¡Tirá la moneda!',
+  text:`El activo de ${J(c)} está <b>Confundido</b>.<br>Cara: ataca normal. Ceca: no ataca y recibe 20 de daño.`,
+  btns:[{l:'Tirar moneda',gold:1,ic:IC.coin,fn:()=>flip(1,'Confusión',r=>{const ok=r[0]==='Cara';
+    act(()=>{S.cf=r[0];if(!ok)S.p[c].ad+=20;log(ok?`${J(c)} Confundido: Cara, ataca normal.`:`${J(c)} Confundido: Ceca, no ataca y recibe 20 de daño.`)});
+    return ok?{big:'¡Cara!',t:'Atacá normalmente.',good:1}:{big:'Ceca',t:'El ataque falla. Se sumaron 20 de daño a tu activo. Si tiene Debilidad a su propio tipo, sumá 20 más.',bad:1,btn:'Terminar turno',fn:()=>advance()}})},{l:'Después'}]})}
+function popEnd(){const sl=[0,1].filter(i=>S.p[i].st.sleep&&!S.sf[i]);
+  const items=S.msgs.map(m=>`<li style="color:var(--${m[0]})">${IC[m[0]]}<span style="color:var(--ink)">${m[1]}</span></li>`).concat(sl.map(i=>`<li style="color:var(--sleep)">${IC.sleep}<span style="color:var(--ink)">${J(i)}: activo Dormido. Moneda: cara = se despierta.</span></li>`));
+  if(!items.length){hidePop();return}
+  showPop({cls:S.msgs.some(m=>m[0]==='poison')?'purple':'',art:ART_END,artColor:'var(--accent)',title:'Fin del turno',html:`<ul class="plist">${items.join('')}</ul>`,
+    btns:sl.map(i=>({l:`Moneda: ¿despierta ${J(i)}?`,gold:1,ic:IC.coin,fn:()=>flip(1,`Sueño · ${J(i)}`,r=>{const ok=r[0]==='Cara';
+      act(()=>{S.sf[i]=r[0];if(ok)delete S.p[i].st.sleep;log(`${J(i)} Dormido: ${r[0]}${ok?', se despierta.':', sigue Dormido.'}`)});
+      return{big:ok?'¡Cara!':'Ceca',t:ok?`El activo de ${J(i)} se despierta.`:`El activo de ${J(i)} sigue Dormido.`,good:ok,bad:!ok,fn:()=>popEnd()}})})).concat([{l:sl.length?'Después':'Continuar'}])})}
+
+/* ---- monedas animadas ---- */
+function flip(n,title,onDone){const r=Array.from({length:n},coin),rm=RM();
+  ui.pop={btns:[]};const el=$('#pop');el.hidden=false;
+  el.innerHTML=`<div class="pc" role="alertdialog" aria-modal="true" aria-labelledby="ptt"><div id="ptt" class="pt">${title}</div>
+  <div class="coins3">${r.map((v,i)=>`<div class="cw"><div class="c3" style="--end:${v==='Cara'?(1800+i*360):(1980+i*360)}deg;animation-delay:${i*.18}s"><div class="fc">${FACE_CARA}<span class="fl">CARA</span></div><div class="fc bk">${FACE_CECA}<span class="fl">CECA</span></div></div><div class="cs" style="animation-delay:${i*.18}s"></div></div>`).join('')}</div>
+  <div id="pres" class="pres" aria-live="polite"></div><div id="pbt" class="pbtns"></div></div>`;
+  setTimeout(()=>{const o=(onDone&&onDone(r))||{};const pr=$('#pres');if(!pr)return;
+    pr.className='pres '+(o.good?'good':o.bad?'bad':'');
+    pr.innerHTML=`<span class="big">${o.big||r.join(' · ')}</span>${o.t||''}`;
+    const bt=[];if(o.fn)bt.push({l:o.btn||'Continuar',pri:1,fn:o.fn});bt.push({l:o.fn?'Cerrar':'Continuar',pri:!o.fn});
+    ui.pop={btns:bt};$('#pbt').innerHTML=bt.map((b,i)=>`<button class="btn ${b.pri?'pri':''}" data-a="pb" data-x="${i}">${b.l}</button>`).join('');
+    const f=$('#pbt button');if(f)f.focus()},rm?150:1550+(n-1)*180)}
+function freeFlip(n){flip(n,n>1?'Dos monedas':'Moneda',r=>{ui.coins=r;log(`Moneda${n>1?'s':''}: ${r.join(', ')}.`);save();render();
+  const c=r.filter(v=>v==='Cara').length;return n>1?{big:r.join(' · '),t:`${c} cara${c===1?'':'s'} de ${n}.`}:{big:r[0]==='Cara'?'¡Cara!':'Ceca'}})}
+function firstFlip(){flip(1,'¿Quién empieza?',r=>{const f=r[0]==='Cara'?0:1;act(()=>{S.first=f;log(`Moneda inicial: ${r[0]}. Empieza ${J(f)}.`)});
+  return{big:r[0]==='Cara'?'¡Cara!':'Ceca',t:`Empieza ${J(f)}. Pulsá Avanzar cuando estén listos.`,good:1}})}
+
+/* ---- guía ---- */
 function reminders(){const c=S.cur,A=S.p[c].st,o=[];const L=(cl,t)=>o.push([cl,t]);
   if(S.phase==='prep'){L('','Cada jugador baraja 60 cartas y roba 7.');L('','Sin Pokémon Básico: mostrar, barajar y robar 7 de nuevo. El rival puede robar hasta 2 cartas extra.');
-    L('','Cada uno pone 1 Básico activo y hasta 5 en la banca, boca abajo.');L('','Cada uno aparta 6 cartas como premios.');L('','Tirá 1 moneda para decidir quién empieza y elegilo abajo.');L('','Se dan vuelta todos los Pokémon y se pulsa Avanzar.')}
+    L('','Cada uno pone 1 Básico activo y hasta 5 en la banca, boca abajo.');L('','Cada uno aparta 6 cartas como premios.');L('','Moneda: Cara empieza el Jugador 1, Ceca el Jugador 2.');L('','Se dan vuelta todos los Pokémon y se pulsa Avanzar.')}
   else if(S.phase==='draw'){L('x',`${J(c)}: robá 1 carta antes de hacer cualquier otra cosa.`);L('','Si no podés robar porque el mazo está vacío, perdés.')}
   else if(S.phase==='main'){L('','Bajar Pokémon Básicos a la banca (máximo 5).');
     L(S.p[c].turns<=1?'x':'',S.p[c].turns<=1?'Primer turno de este jugador: no puede evolucionar.':'Evolucionar: no sobre un Pokémon bajado o evolucionado este turno. Si evolucionás el activo, usá Curar estado.');
@@ -114,34 +287,54 @@ function reminders(){const c=S.cur,A=S.p[c].st,o=[];const L=(cl,t)=>o.push([cl,t
     L(A.sleep||A.para?'x':A.conf?'w':'',A.sleep||A.para?'El activo no puede retirarse (Dormido o Paralizado).':A.conf?'Retirar estando Confundido: pagá el coste y tirá 1 moneda; ceca = falla.':'Retirar: descartá 1 energía por cada ★ y usá Cambiar activo.')}
   else if(S.phase==='atk'){
     if(A.sleep||A.para)L('x',`El activo de ${J(c)} está ${A.sleep?'Dormido':'Paralizado'}: no puede atacar. Pulsá Avanzar.`);
-    else{if(A.conf)L('w','Activo Confundido: tirá 1 moneda antes de atacar. Ceca = no ataca y sumá 20 de daño a tu propio activo.');
+    else{if(A.conf)L(S.cf?'k':'w',S.cf?`Moneda de Confusión: ${S.cf}${S.cf==='Ceca'?' (no ataca).':' (ataca normal).'}`:'Activo Confundido: tirá la moneda antes de atacar.');
       L('','Debilidad: daño ×2. Resistencia: daño −30.');L('','Usá Sumar daño sobre el Pokémon rival y Poner estado si el ataque lo indica.');
       L('','Si el daño llega a los PS: Debilitado y el atacante toma 1 premio.');L('','Atacar termina el turno: pulsá Avanzar.')}}
-  else if(S.phase==='end'){S.msgs.forEach(m=>L(m[0],m[1]));if(!S.msgs.length)L('k','Sin veneno, sueño ni parálisis.');L('','Si un activo quedó Debilitado, su dueño sube uno de la banca con Cambiar activo.')}
+  else if(S.phase==='end'){S.msgs.forEach(m=>L(m[0]==='poison'?'w':'k',m[1]));
+    [0,1].forEach(i=>{if(S.p[i].st.sleep&&!S.sf[i])L('w',`${J(i)}: activo Dormido, falta la moneda para despertar.`)});
+    if(!o.length)L('k','Sin veneno, sueño ni parálisis.');L('','Si un activo quedó Debilitado, su dueño sube uno de la banca con Cambiar activo.')}
   return o}
+function remAction(){const c=S.cur,A=S.p[c].st;
+  if(S.phase==='prep')return`<div class="tools" style="margin-top:10px"><button class="btn gold" data-a="ff">${IC.coin}Moneda inicial</button>${[0,1].map(i=>`<button class="btn ${S.first===i?'sel':''}" aria-pressed="${S.first===i}" data-a="first" data-x="${i}">Empieza ${J(i)}</button>`).join('')}</div>`;
+  if(S.phase==='draw')return`<div class="tools" style="margin-top:10px"><button class="btn" data-a="re">Ver aviso</button></div>`;
+  if(S.phase==='atk'&&A.conf&&!S.cf&&!A.sleep&&!A.para)return`<div class="tools" style="margin-top:10px"><button class="btn gold" data-a="re">${IC.coin}Moneda de Confusión</button></div>`;
+  if(S.phase==='end'&&[0,1].some(i=>S.p[i].st.sleep&&!S.sf[i]))return`<div class="tools" style="margin-top:10px"><button class="btn gold" data-a="re">${IC.coin}Moneda de sueño</button></div>`;
+  return''}
 
-const bdg=st=>{const k=Object.keys(STN).filter(x=>st[x]);return`<div class="bdgs">${k.length?k.map(x=>`<span class="bdg ${x}">${STN[x]}</span>`).join(''):'<span class="bdg none">Sin estados</span>'}</div>`};
-function board(i){const p=S.p[i],on=S.phase!=='prep'&&S.cur===i;
-  return`<section class="board ${on?'on':''}"><div class="bh"><h2>${J(i)}</h2>${on?'<span class="pill">Su turno</span>':''}</div>
-  <div class="act"><div class="lbl">Activo</div><div class="dm">${p.ad}<small> de daño</small></div>${bdg(p.st)}</div>
-  <div class="bench">${p.bd.map((d,b)=>`<div class="bs ${d?'':'z'}"><div class="lbl">B${b+1}</div><div class="dm">${d}</div></div>`).join('')}</div></section>`}
+/* ---- tablero ---- */
+function tokens(d){const f=Math.floor(d/50),t=Math.floor((d%50)/10);return'<i class="tk t50">50</i>'.repeat(f)+'<i class="tk t10">10</i>'.repeat(t)}
+const ORI={sleep:'side',para:'side',conf:'flip'};
+function bdg(st){const k=Object.keys(STN).filter(x=>st[x]);
+  return`<div class="bdgs">${k.length?k.map(x=>`<span class="bdg ${x}">${IC[x]}${STN[x]}${ORI[x]?` <i class="ori ${ORI[x]}" title="Orientación de la carta"></i>`:''}</span>`).join(''):'<span class="bdg none">Sin estados</span>'}</div>`}
+const FXPOS={sleep:'top:30%;right:8%',conf:'top:30%;left:8%',para:'bottom:26%;right:10%',poison:'bottom:26%;left:10%'};
+function board(i){const p=S.p[i],on=S.phase!=='prep'&&S.cur===i,ks=Object.keys(STN).filter(x=>p.st[x]);
+  return`<section class="board ${on?'on':''}" aria-label="Tablero de ${J(i)}"><div class="bh"><h2>${J(i)}</h2>${on?'<span class="pill">Su turno</span>':''}</div>
+  <div class="zone"><span class="zlab">Zona activa</span>
+   <div class="card ${ks.map(k=>'s-'+k).join(' ')}" role="img" aria-label="Activo de ${J(i)}: ${p.ad} de daño${ks.length?', '+ks.map(k=>STN[k]).join(', '):''}">
+    <div class="cin"><div class="ctop"><span>ACTIVO</span><span>${p.ad?Math.round(p.ad/10)+' ctr':''}</span></div>
+    <div class="dmg ${p.ad>=60?'hot':''}">${p.ad}</div><div class="dl">de daño</div><div class="tks">${tokens(p.ad)}</div>
+    <div class="aura">${ks.map(k=>`<span class="fx ${k}" style="${FXPOS[k]};color:var(--${k})">${IC[k]}</span>`).join('')}</div></div></div>
+   ${bdg(p.st)}</div>
+  <div class="zone" style="margin-top:8px"><span class="zlab">Banca</span>
+  <div class="bench">${p.bd.map((d,b)=>`<div class="bcard ${d?'':'z'}" role="img" aria-label="Banca ${b+1}: ${d} de daño"><div class="bi"><span class="bn">B${b+1}</span><span class="bd">${d}</span><span class="dots">${'<i class="f"></i>'.repeat(Math.floor(d/50))+'<i></i>'.repeat(Math.floor(d%50/10))}</span></div></div>`).join('')}</div></div></section>`}
 
-function render(){const r=reminders();
-  $('#app').innerHTML=`<header class="top"><div class="top-in"><div class="tinfo"><div class="turn">${S.phase==='prep'?'Preparación':`Turno ${S.turn} · ${J(S.cur)}`}</div><div class="ph">${PH[S.phase]}</div></div>
-  <button class="adv" data-a="adv">Avanzar</button></div></header>
-  <main class="wrap"><div class="panel rem"><h2>${PH[S.phase]}</h2><ul>${r.map(x=>`<li class="${x[0]}">${x[1]}</li>`).join('')}</ul>
-  ${S.phase==='prep'?`<div class="tools" style="margin-top:10px">${[0,1].map(i=>`<button class="btn ${S.first===i?'sel':''}" aria-pressed="${S.first===i}" data-a="first" data-x="${i}">Empieza ${J(i)}</button>`).join('')}</div>`:''}</div>
+function render(){const r=reminders(),ix=ORD.indexOf(S.phase);
+  $('#app').innerHTML=`<header class="top"><div class="top-in"><div class="tinfo"><div class="turn">${S.phase==='prep'?'Preparación':`Turno ${S.turn} · ${J(S.cur)}`}</div>
+  <div class="pips" aria-hidden="true">${ORD.map((k,j)=>`<span class="${j===ix?'on':j<ix?'d':''}"></span>`).join('')}</div><div class="phn">${PH[S.phase]}</div></div>
+  <button class="adv disp" data-a="adv">Avanzar</button></div></header>
+  <main class="wrap"><div class="panel rem"><h2>${PH[S.phase]}</h2><ul>${r.map(x=>`<li class="${x[0]}">${x[1]}</li>`).join('')}</ul>${remAction()}</div>
   <div class="panel"><div class="tools">
-  <button class="btn" data-a="pick" data-x="dmg">Sumar daño</button><button class="btn" data-a="pick" data-x="heal">Curar</button>
-  <button class="btn" data-a="pick" data-x="setst">Poner estado</button><button class="btn" data-a="pick" data-x="curest">Curar estado</button>
-  <button class="btn dan" data-a="pick" data-x="ko">Debilitado</button><button class="btn" data-a="pick" data-x="swap">Cambiar activo</button>
-  <button class="btn" data-a="coin" data-x="1">Tirar 1 moneda</button><button class="btn" data-a="coin" data-x="2">Tirar 2 monedas</button></div>
-  ${ui.coins.length?`<div class="coinr">${ui.coins.map(c=>`<span class="coin ${c==='Cara'?'c':''}">${c}</span>`).join('')}</div>`:''}</div>
+  <button class="btn" data-a="pick" data-x="dmg">${IC.plus}Sumar daño</button><button class="btn" data-a="pick" data-x="heal">${IC.heal}Curar</button>
+  <button class="btn" data-a="pick" data-x="setst">${IC.status}Poner estado</button><button class="btn" data-a="pick" data-x="curest">${IC.cure}Curar estado</button>
+  <button class="btn dan" data-a="pick" data-x="ko">${IC.ko}Debilitado</button><button class="btn" data-a="pick" data-x="swap">${IC.swap}Cambiar activo</button>
+  <button class="btn gold" data-a="coin" data-x="1">${IC.coin}Tirar 1 moneda</button><button class="btn gold" data-a="coin" data-x="2">${IC.coin2}Tirar 2 monedas</button></div>
+  ${ui.coins.length?`<div class="lastc"><span class="muted">Última tirada:</span>${ui.coins.map(c=>`<span class="chip ${c==='Cara'?'c':''}">${c}</span>`).join('')}</div>`:''}</div>
   <div class="boards">${board(0)}${board(1)}</div>
   <details ${ui.det?'open':''}><summary>Registro y opciones</summary><div class="tools" style="margin:8px 0"><button class="btn" data-a="undo" ${U.length?'':'disabled'}>Deshacer</button><button class="btn dan" data-a="newg">${ui.confirm?'Confirmar: borrar partida':'Nueva partida'}</button></div>
   <ul class="log">${S.log.map(l=>`<li>${l}</li>`).join('')||'<li class="muted">Sin movimientos.</li>'}</ul></details></main>`;
   sheet()}
 
+/* ---- hoja de selección ---- */
 const TITLE={dmg:'Sumar daño',heal:'Curar',setst:'Poner estado',curest:'Curar estado',ko:'Debilitado',swap:'Cambiar activo'};
 function targets(onlyActive){return[0,1].map(i=>`<div class="grp"><h3>${J(i)}</h3><div class="grid">${(onlyActive?['a']:['a','b0','b1','b2','b3','b4']).map(s=>{const t=i+s;return`<button class="btn" data-a="tg" data-x="${t}">${s==='a'?'Activo':'Banca '+(+s[1]+1)} · ${getD(t)}</button>`}).join('')}</div></div>`).join('')}
 function sheet(){const el=$('#sheet'),k=ui.pick;if(!k){el.hidden=true;el.innerHTML='';return}el.hidden=false;let h='';
@@ -150,9 +343,9 @@ function sheet(){const el=$('#sheet'),k=ui.pick;if(!k){el.hidden=true;el.innerHT
   else{const t=k.t,i=+t[0],st=S.p[i].st;h=`<p><b>${k.kind==='swap'?J(i):tName(t)}</b>${k.kind==='swap'?'':` · daño actual ${getD(t)}`}</p>`;
     if(k.kind==='dmg')h+=`<div class="grid">${[10,20,30,40,50,60,70,80,100].map(n=>`<button class="btn" data-a="do" data-x="${n}">+${n}</button>`).join('')}</div>`;
     if(k.kind==='heal')h+=`<div class="grid">${[10,20,30,40,50,60].map(n=>`<button class="btn" data-a="do" data-x="${n}">−${n}</button>`).join('')}<button class="btn" data-a="do" data-x="all">Todo</button></div>`;
-    if(k.kind==='setst')h+=`<div class="grid">${Object.keys(STN).map(s=>`<button class="btn ${st[s]?'sel':''}" data-a="do" data-x="${s}">${STN[s]}</button>`).join('')}</div><p class="muted">Dormido, Confundido y Paralizado se reemplazan entre sí. Envenenado se suma a cualquiera.</p>`;
-    if(k.kind==='curest'){const ks=Object.keys(STN).filter(s=>st[s]);h+=ks.length?`<div class="grid">${ks.map(s=>`<button class="btn" data-a="do" data-x="${s}">${STN[s]}</button>`).join('')}<button class="btn" data-a="do" data-x="all">Todos</button></div>`:'<p class="muted">Este activo no tiene estados.</p>'}
-    if(k.kind==='ko')h+=`<p>El daño vuelve a 0${t[1]==='a'?' y se borran los estados':''}. El rival toma 1 premio.${t[1]==='a'?' Después subí un Pokémon de la banca con Cambiar activo.':''}</p><button class="btn dan" data-a="do" data-x="ok">Confirmar Debilitado</button>`;
+    if(k.kind==='setst')h+=`<div class="grid">${Object.keys(STN).map(s=>`<button class="btn ${st[s]?'sel':''}" style="color:var(--${s})" data-a="do" data-x="${s}">${IC[s]}${STN[s]}</button>`).join('')}</div><p class="muted">Dormido, Confundido y Paralizado se reemplazan entre sí. Envenenado se suma a cualquiera.</p>`;
+    if(k.kind==='curest'){const ks=Object.keys(STN).filter(s=>st[s]);h+=ks.length?`<div class="grid">${ks.map(s=>`<button class="btn" style="color:var(--${s})" data-a="do" data-x="${s}">${IC[s]}${STN[s]}</button>`).join('')}<button class="btn" data-a="do" data-x="all">Todos</button></div>`:'<p class="muted">Este activo no tiene estados.</p>'}
+    if(k.kind==='ko')h+=`<p>El daño vuelve a 0${t[1]==='a'?' y se borran los estados':''}. El rival toma 1 premio.</p><button class="btn dan" data-a="do" data-x="ok">${IC.ko}Confirmar Debilitado</button>`;
     if(k.kind==='swap')h+=`<p>¿Qué Pokémon de la banca pasa a activo? El activo actual va a ese lugar y pierde sus estados.</p><div class="grid">${S.p[i].bd.map((d,b)=>`<button class="btn" data-a="do" data-x="${b}">Banca ${b+1} · ${d}</button>`).join('')}</div>`}
   el.innerHTML=`<div class="pan" data-a="noop" role="dialog" aria-modal="true" aria-label="${TITLE[k.kind]}"><div class="shead"><h2>${TITLE[k.kind]}</h2><button class="ghost" data-a="close">Cerrar</button></div>${h}</div>`}
 
@@ -162,18 +355,23 @@ function doIt(x){const k=ui.pick,t=k.t,i=+t[0],p=S.p[i];act(()=>{
   if(k.kind==='setst'){if(x!=='poison'){delete p.st.sleep;delete p.st.conf;delete p.st.para;p.paraT=null}p.st[x]=true;if(x==='para')p.paraT=S.turn;log(`${tName(t)}: ${STN[x]}.`)}
   if(k.kind==='curest'){if(x==='all')p.st={};else delete p.st[x];if(!p.st.para)p.paraT=null;log(`${tName(t)}: curado ${x==='all'?'de todos los estados':'de '+STN[x]}.`)}
   if(k.kind==='ko'){setD(t,0);if(t[1]==='a'){p.st={};p.paraT=null}log(`${tName(t)}: Debilitado. ${J(1-i)} toma 1 premio.`)}
-  if(k.kind==='swap'){const b=+x,old=p.ad;p.ad=p.bd[b];p.bd[b]=old;p.st={};p.paraT=null;log(`${J(i)}: Banca ${b+1} pasa a activo; el anterior activo queda en Banca ${b+1}.`)}})}
+  if(k.kind==='swap'){const b=+x,old=p.ad;p.ad=p.bd[b];p.bd[b]=old;p.st={};p.paraT=null;log(`${J(i)}: Banca ${b+1} pasa a activo; el anterior activo queda en Banca ${b+1}.`)}});
+  if(k.kind==='ko')showPop({art:ART_KO,title:'¡Debilitado!',text:`${J(1-i)}: tomá 1 premio.${t[1]==='a'?`<br>${J(i)}: subí un Pokémon de la banca con <b>Cambiar activo</b>.`:''}`,
+    btns:t[1]==='a'?[{l:'Cambiar activo ahora',pri:1,fn:()=>{hidePop();ui.pick={kind:'swap',t:i+'a'};sheet()}},{l:'Después'}]:[{l:'Entendido',pri:1}]})}
 
 const H={adv:advance,noop(){},close(){ui.pick=null;sheet()},
-  first(x){act(()=>{S.first=+x})},
-  coin(x){ui.coins=Array.from({length:+x},coin);log(`Moneda${+x>1?'s':''}: ${ui.coins.join(', ')}.`);save();render()},
+  first(x){act(()=>{S.first=+x})},ff:firstFlip,
+  re(){phasePop()},
+  coin(x){freeFlip(+x)},
+  pb(x){const b=ui.pop&&ui.pop.btns&&ui.pop.btns[+x];if(!b)return;if(b.fn)b.fn();else hidePop()},
   pick(x){ui.pick={kind:x,t:null};sheet()},tg(x){ui.pick.t=x;sheet()},do:doIt,
   undo(){if(U.length){S=JSON.parse(U.pop());save();render()}},
   newg(){if(!ui.confirm){ui.confirm=true;ui.det=true;render();return}ui.confirm=false;S=fresh();U=[];ui.coins=[];save();render()}};
-document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;(H[b.dataset.a]||H.noop)(b.dataset.x)});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
+  (H[b.dataset.a]||H.noop)(b.dataset.x)});
 document.addEventListener('toggle',e=>{if(e.target.tagName==='DETAILS')ui.det=e.target.open},true);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ui.pick){ui.pick=null;sheet()}});
-load();render();
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(ui.pop&&$('#pop button')){hidePop();return}if(ui.pick){ui.pick=null;sheet()}}});
+load();render();if(S.phase!=='prep')phasePop();
 </script>
 </body>
 </html>
